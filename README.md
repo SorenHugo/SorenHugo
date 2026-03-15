@@ -54,6 +54,7 @@ You can click the Preview link to take a look at your changes.
 <!-- Powered by https://github.com/YouEclipse/steam-box . -->
 <!-- steam-box end -->
 
+</figure>
 
 <details>
 <summary></summary>
