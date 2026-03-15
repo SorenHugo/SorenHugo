@@ -1,0 +1,69 @@
+name: Update Steam Friends
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+permissions:
+  contents: write
+
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  Update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: '检查代码'
+        uses: actions/checkout@v4
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: 设置 Python 环境
+        run: uv python install 3.12
+
+      - name: 安装项目依赖
+        run: uv sync
+
+      - name: '运行程序'
+        env:
+          web_api: ${{ secrets.web_api }}
+          id: ${{ secrets.id }}
+        run: |
+          uv run python ./steamfriends.py
+
+      - name: '获取当前日期'
+        id: current_date
+        run: |
+          echo "date=$(date +"%Y-%m-%d_%H-%M-%S")" >> $GITHUB_OUTPUT
+
+      - name: '检查更改'
+        run: |
+          git fetch
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit."
+            echo "skip_commit=true" >> $GITHUB_ENV
+          else
+            echo "Changes detected."
+            echo "skip_commit=false" >> $GITHUB_ENV
+          fi
+
+      - name: 'commit'
+        if: ${{ env.skip_commit == 'false' }}
+        run: |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git add --all
+          git commit -m "${{ steps.current_date.outputs.date }} Update Steamfriends"
+      
+      - name: 'push'
+        if: ${{ env.skip_commit == 'false' }}
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
