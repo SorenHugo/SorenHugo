@@ -5,6 +5,9 @@ on:
   schedule:
     - cron: "0 0 * * *"
     
+permissions:
+  contents: write
+
 env:
   TZ: Asia/Shanghai
   
@@ -52,9 +55,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git add README.md
           git commit -m "${{ steps.current_date.outputs.date }} Update Steam Playtime" || exit 0
-
-      - name: 'Push'
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          git pull
+          git push
