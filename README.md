@@ -44,11 +44,12 @@ You can click the Preview link to take a look at your changes.
 <figure>
 
 <!-- steam-box start -->
+🎮 Recently played Steam games
 ```text
-🎮 Dead by Daylight                 🕘 1104 hrs 35 mins
-🎮 PAYDAY 2                         🕘 369 hrs 2 mins
-🚓 Grand Theft Auto V Legacy        🕘 279 hrs 40 mins
-🎮 The Outlast Trials               🕘 195 hrs 4 mins
+🎮 Dead by Daylight                 🕘 1106 hrs 40 mins
+🎮 POSTAL 2                         🕘 1 hrs 36 mins
+🎮 Party Animals                    🕘 108 hrs 12 mins
+🎮 The Outlast Trials               🕘 195 hrs 54 mins
 🎮 Bongo Cat                        🕘 186 hrs 18 mins
 ```
 <!-- Powered by https://github.com/YouEclipse/steam-box . -->
